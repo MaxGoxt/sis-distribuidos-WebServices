@@ -1,7 +1,6 @@
 package com.example.demo;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDate;
 
 @Entity
@@ -15,6 +14,10 @@ public class Paciente {
     private String apellido;
     private String documento;
     private LocalDate fechaNacimiento;
+
+    @ManyToOne
+    @JoinColumn(name = "centro_medico_id")
+    private CentroMedico centroMedico;
 
     public Paciente() {}
 
@@ -52,5 +55,13 @@ public class Paciente {
 
     public void setFechaNacimiento(LocalDate fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
+    }
+
+    public CentroMedico getCentroMedico() {
+        return centroMedico;
+    }
+
+    public void setCentroMedico(CentroMedico centroMedico) {
+        this.centroMedico = centroMedico;
     }
 }
