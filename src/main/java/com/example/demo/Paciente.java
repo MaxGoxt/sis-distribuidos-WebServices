@@ -64,8 +64,4 @@ public class Paciente {
     public void setCentroMedico(CentroMedico centroMedico) {
         this.centroMedico = centroMedico;
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 093ff4fe560cb3a00ff3e7fdf94f553f38d418a8
