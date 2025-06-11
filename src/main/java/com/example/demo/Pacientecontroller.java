@@ -35,6 +35,7 @@ public Paciente updatePaciente(@PathVariable Long id, @RequestBody Paciente paci
         paciente.setApellido(pacienteData.getApellido());
         paciente.setDocumento(pacienteData.getDocumento());
         paciente.setFechaNacimiento(pacienteData.getFechaNacimiento());
+        paciente.setCentroMedico(pacienteData.getCentroMedico());
         return pacienteRepository.save(paciente);
     }).orElse(null);
 }

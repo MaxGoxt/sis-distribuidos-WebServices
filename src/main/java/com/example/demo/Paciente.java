@@ -3,7 +3,10 @@ package com.example.demo;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
+@JsonIgnoreProperties("centroMedico")
 public class Paciente {
 
     @Id
