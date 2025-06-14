@@ -8,9 +8,11 @@ import java.util.List;
 public class Pacientecontroller {
 
     private final PacienteRepository pacienteRepository;
+    private final CentroMedicoRepository centroMedicoRepository;
 
-    public Pacientecontroller(PacienteRepository pacienteRepository) {
+    public Pacientecontroller(PacienteRepository pacienteRepository, CentroMedicoRepository centroMedicoRepository) {
         this.pacienteRepository = pacienteRepository;
+        this.centroMedicoRepository = centroMedicoRepository;
     }
 
     @GetMapping
@@ -19,9 +21,18 @@ public class Pacientecontroller {
     }
 
     @PostMapping
-    public Paciente createPaciente(@RequestBody Paciente paciente) {
+    public Paciente crearPaciente(@RequestBody Paciente paciente) {
+        if (paciente.getCentroMedico() != null && paciente.getCentroMedico().getId() != null) {
+            CentroMedico centro = this.centroMedicoRepository
+                .findById(paciente.getCentroMedico().getId())
+                .orElseThrow(() -> new RuntimeException("Centro médico no encontrado"));
+            paciente.setCentroMedico(centro);
+        }
+        System.out.println("Centro asociado: " + paciente.getCentroMedico().getNombre());
+
         return pacienteRepository.save(paciente);
     }
+
 
     @GetMapping("/{id}")
     public Paciente getPacienteById(@PathVariable Long id) {

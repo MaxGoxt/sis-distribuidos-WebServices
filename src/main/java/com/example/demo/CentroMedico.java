@@ -6,7 +6,6 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@JsonIgnoreProperties("pacientes")
 public class CentroMedico {
 
     @Id
@@ -32,11 +31,11 @@ public class CentroMedico {
 
     // Getters y Setters
     public Long getId() {
-        return id;
+        return this.id;
     }
 
     public String getNombre() {
-        return nombre;
+        return this.nombre;
     }
 
     public void setNombre(String nombre) {
@@ -44,7 +43,7 @@ public class CentroMedico {
     }
 
     public String getDireccion() {
-        return direccion;
+        return this.direccion;
     }
 
     public void setDireccion(String direccion) {
@@ -52,7 +51,7 @@ public class CentroMedico {
     }
 
     public String getTelefono() {
-        return telefono;
+        return this.telefono;
     }
 
     public void setTelefono(String telefono) {
@@ -60,7 +59,7 @@ public class CentroMedico {
     }
 
     public List<Paciente> getPacientes() {
-        return pacientes;
+        return this.pacientes;
     }
 
     public void setPacientes(List<Paciente> pacientes) {

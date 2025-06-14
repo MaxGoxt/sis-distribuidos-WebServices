@@ -6,7 +6,6 @@ import java.time.LocalDate;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@JsonIgnoreProperties("centroMedico")
 public class Paciente {
 
     @Id
@@ -25,11 +24,11 @@ public class Paciente {
     public Paciente() {}
 
     public Long getId() {
-        return id;
+        return this.id;
     }
 
     public String getNombre() {
-        return nombre;
+        return this.nombre;
     }
 
     public void setNombre(String nombre) {
@@ -37,7 +36,7 @@ public class Paciente {
     }
 
     public String getApellido() {
-        return apellido;
+        return this.apellido;
     }
 
     public void setApellido(String apellido) {
@@ -45,7 +44,7 @@ public class Paciente {
     }
 
     public String getDocumento() {
-        return documento;
+        return this.documento;
     }
 
     public void setDocumento(String documento) {
@@ -53,7 +52,7 @@ public class Paciente {
     }
 
     public LocalDate getFechaNacimiento() {
-        return fechaNacimiento;
+        return this.fechaNacimiento;
     }
 
     public void setFechaNacimiento(LocalDate fechaNacimiento) {
@@ -61,7 +60,7 @@ public class Paciente {
     }
 
     public CentroMedico getCentroMedico() {
-        return centroMedico;
+        return this.centroMedico;
     }
 
     public void setCentroMedico(CentroMedico centroMedico) {
