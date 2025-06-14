@@ -3,7 +3,7 @@ package com.example.demo;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 public class Paciente {
@@ -19,6 +19,7 @@ public class Paciente {
 
     @ManyToOne
     @JoinColumn(name = "centro_medico_id")
+    @JsonBackReference
     private CentroMedico centroMedico;
 
     public Paciente() {}
