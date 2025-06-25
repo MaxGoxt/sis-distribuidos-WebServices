@@ -17,12 +17,13 @@ public class CentroMedico {
     private String telefono;
 
     // Relación con pacientes (1 centro médico -> muchos pacientes)
-    @OneToMany(mappedBy = "centroMedico", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "centroMedico", cascade = CascadeType.PERSIST, orphanRemoval = false)
     @JsonManagedReference
     private List<Paciente> pacientes;
 
     // Constructores
-    public CentroMedico() {}
+    public CentroMedico() {
+    }
 
     public CentroMedico(String nombre, String direccion, String telefono) {
         this.nombre = nombre;
@@ -67,4 +68,3 @@ public class CentroMedico {
         this.pacientes = pacientes;
     }
 }
-

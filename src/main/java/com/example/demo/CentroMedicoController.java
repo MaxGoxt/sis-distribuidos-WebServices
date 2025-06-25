@@ -1,6 +1,10 @@
 package com.example.demo;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -15,31 +19,52 @@ public class CentroMedicoController {
 
     @GetMapping
     public List<CentroMedico> getAllCentros() {
-        return centroMedicoRepository.findAll();
+        List<CentroMedico> centros = centroMedicoRepository.findAll();
+        if (centros == null) {
+            return new ArrayList<>();
+        }
+        return centros;
     }
 
     @PostMapping
-    public CentroMedico createCentro(@RequestBody CentroMedico centroMedico) {
-        return centroMedicoRepository.save(centroMedico);
+    public ResponseEntity<CentroMedico> createCentro(@RequestBody CentroMedico centroMedico) {
+        CentroMedico nuevo = centroMedicoRepository.save(centroMedico);
+        return ResponseEntity.status(HttpStatus.CREATED).body(nuevo);
     }
 
     @GetMapping("/{id}")
-    public CentroMedico getCentroById(@PathVariable Long id) {
-        return centroMedicoRepository.findById(id).orElse(null);
+    public ResponseEntity<CentroMedico> getCentroById(@PathVariable Long id) {
+        return centroMedicoRepository.findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @PutMapping("/{id}")
-    public CentroMedico updateCentro(@PathVariable Long id, @RequestBody CentroMedico data) {
+    public ResponseEntity<CentroMedico> updateCentro(@PathVariable Long id, @RequestBody CentroMedico data) {
         return centroMedicoRepository.findById(id).map(centro -> {
             centro.setNombre(data.getNombre());
             centro.setDireccion(data.getDireccion());
             centro.setTelefono(data.getTelefono());
-            return centroMedicoRepository.save(centro);
-        }).orElse(null);
+            CentroMedico actualizado = centroMedicoRepository.save(centro);
+            return ResponseEntity.ok(actualizado);
+        }).orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")
-    public void deleteCentro(@PathVariable Long id) {
+    public ResponseEntity<?> deleteCentro(@PathVariable Long id) {
+        CentroMedico centro = centroMedicoRepository.findById(id).orElse(null);
+
+        if (centro == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        if (centro.getPacientes() != null && !centro.getPacientes().isEmpty()) {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body("No se puede eliminar el centro porque tiene pacientes asignados.");
+        }
+
         centroMedicoRepository.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
+
 }
